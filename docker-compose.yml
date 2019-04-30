@@ -1,0 +1,13 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      args:
+        - KES_SOURCE=${KES_SOURCE}
+    ports:
+      - 81:80
+    environment:
+      - KES_SOURCE
+#    volumes:
+#      - ./www:/var/www/html

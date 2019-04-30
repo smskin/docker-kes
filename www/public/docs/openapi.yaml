@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: 'Antivirus interface'
+  contact:
+    email: serg@msoinvest.com
+  version: '0.1'
+paths:
+  /kes/app-info:
+    get:
+      tags:
+        - 'Kaspersy endpoint security'
+      summary: 'Get app info'
+      operationId: kesAppInfo
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppInfoModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AppInfoModel'
+  /kes/scan-file:
+    post:
+      tags:
+        - 'Kaspersy endpoint security'
+      summary: 'Scan file'
+      operationId: kesScanFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              properties:
+                file:
+                  description: 'file to upload'
+                  type: file
+                  format: file
+              type: object
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanFileModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ScanFileModel'
+        '405':
+          description: 'validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Exception'
+components:
+  schemas:
+    Exception:
+      title: Exception
+      description: 'Exception model'
+      properties:
+        message:
+          title: message
+          description: 'Exception message'
+          type: string
+      type: object
+    AppInfoDataItemModel:
+      title: AppInfoDataItemModel
+      description: 'App info data item model'
+      properties:
+        param:
+          title: param
+          description: Parameter
+          type: string
+        value:
+          title: value
+          description: Value
+          type: string
+      type: object
+    AppInfoModel:
+      title: AppInfoModel
+      description: 'App info model'
+      properties:
+        data:
+          title: data
+          description: 'Antivirus response'
+          type: array
+          items:
+            $ref: '#/components/schemas/AppInfoDataItemModel'
+      type: object
+    ScanFileDataItemModel:
+      title: ScanFileDataItemModel
+      description: 'Scan file data item model'
+      properties:
+        param:
+          title: param
+          description: param
+          type: string
+        count:
+          title: count
+          description: count
+          type: integer
+      type: object
+    ScanFileModel:
+      title: ScanFileModel
+      description: 'Scan file model'
+      properties:
+        isInfected:
+          title: isInfected
+          description: 'Status of object'
+          type: boolean
+        data:
+          title: data
+          description: 'Antivirus response'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScanFileDataItemModel'
+      type: object

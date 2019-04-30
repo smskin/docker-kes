@@ -1,0 +1,1 @@
+docker exec -it antivirus_app_1 bash
