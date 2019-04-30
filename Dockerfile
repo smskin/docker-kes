@@ -13,7 +13,7 @@ RUN mkdir -p /etc/my_init.d
 # Kaspersky endpoint protection:
 #####################################
 RUN apt-get update && apt-get install -y wget perl make gcc
-ARG KES_SOURCE
+ARG KES_SOURCE=https://products.s.kaspersky-labs.com/endpoints/keslinux10/10.1.0.5960/multilanguage-20180409_093437/5c42f68b/kesl_10.1.0-5960_amd64.deb
 RUN mkdir /root/kes
 RUN wget ${KES_SOURCE} -O /root/kes/kes.deb
 RUN dpkg -i /root/kes/kes.deb
